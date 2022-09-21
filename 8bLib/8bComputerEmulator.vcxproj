@@ -23,6 +23,7 @@
     <ClInclude Include="bus.h" />
     <ClInclude Include="component.h" />
     <ClInclude Include="cpu.h" />
+    <ClInclude Include="forbiddenActionException.h" />
     <ClInclude Include="register.h" />
     <ClInclude Include="shortRegister.h" />
   </ItemGroup>
@@ -31,6 +32,7 @@
     <ClCompile Include="bus.cpp" />
     <ClCompile Include="component.cpp" />
     <ClCompile Include="cpu.cpp" />
+    <ClCompile Include="forbiddenActionException.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="register.cpp" />
     <ClCompile Include="shortRegister.cpp" />
@@ -41,7 +43,7 @@
     <ProjectGuid>{0c499613-23ed-4b0c-8845-08e16bda7721}</ProjectGuid>
     <RootNamespace>My8bComputerEmulator</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>EmuLib</ProjectName>
+    <ProjectName>8bLib</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

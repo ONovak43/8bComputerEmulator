@@ -2,6 +2,8 @@
 #include "pch.h"
 #include "../8bLib/register.h"
 #include "../8bLib/shortRegister.cpp"
+#include "../8bLib/bus.cpp"
+#include "../8bLib/forbiddenActionException.cpp"
 
 namespace {
 	TEST(RegisterTest, RegisterShouldBeZeroWhenItsCleared)
@@ -55,5 +57,12 @@ namespace {
 
 		A = 0b01011111;
 		EXPECT_EQ(A.value(), 0b1111);
+	}
+
+	TEST(BUSTest, BUSShouldThrowAnErrorWhenItsCleared)
+	{
+		EmulatorLib::BUS bus;
+
+		EXPECT_THROW(bus.clear(), EmulatorLib::ForbiddenActionException);
 	}
 }
