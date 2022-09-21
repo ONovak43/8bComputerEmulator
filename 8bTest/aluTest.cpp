@@ -1,7 +1,7 @@
 #include <memory>
 #include "pch.h"
-#include "../8bComputerEmulator/alu.cpp"
-#include "../8bComputerEmulator/register.cpp"
+#include "../8bLib/alu.cpp"
+#include "../8bLib/register.cpp"
 
 namespace {
 	class ALUTest : public ::testing::Test

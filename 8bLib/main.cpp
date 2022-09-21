@@ -5,8 +5,5 @@
 
 int main()
 {
-	EmulatorLib::ShortRegister A;
-	A = 0b101;
-	A.value();
-	std::cout << "TEST";
+
 }

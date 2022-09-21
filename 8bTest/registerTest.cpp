@@ -1,7 +1,7 @@
 #include <memory>
 #include "pch.h"
-#include "../8bComputerEmulator/register.h"
-#include "../8bComputerEmulator/shortRegister.cpp"
+#include "../8bLib/register.h"
+#include "../8bLib/shortRegister.cpp"
 
 namespace {
 	TEST(RegisterTest, RegisterShouldBeZeroWhenItsCleared)
