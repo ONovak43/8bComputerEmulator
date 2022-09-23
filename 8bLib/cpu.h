@@ -3,7 +3,10 @@
 #include <cstdint>
 #include "register.h"
 #include "shortRegister.h"
+#include "programCounter.h"
 #include "alu.h"
+#include "instructionRegister.h"
+#include "ram.h"
 
 namespace EmulatorLib {
 	class CPU
@@ -12,14 +15,13 @@ namespace EmulatorLib {
 		CPU();
 		void Reset();
 		void Execute();
-		void Clock();
 	private:
 		EmulatorLib::Register A_, B_; // Registers A and B
+		EmulatorLib::InstructionRegister IR_; // Instruction Register
 		EmulatorLib::ShortRegister MAR_; // Memory Address Register
-		EmulatorLib::ShortRegister PC_; // Program Counter
-		EmulatorLib::ShortRegister IR_; // Instruction Register
-		EmulatorLib::ALU ALU_;
-		std::uint8_t Clock_ : 1;
+		EmulatorLib::ProgramCounter PC_; // Program Counter
+		EmulatorLib::ALU ALU_; // ALU
+		EmulatorLib::RAM ram; // RAM
 	};
 } // namespace Emulator
 #endif

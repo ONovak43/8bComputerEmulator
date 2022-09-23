@@ -21,19 +21,23 @@
   <ItemGroup>
     <ClInclude Include="alu.h" />
     <ClInclude Include="bus.h" />
-    <ClInclude Include="component.h" />
     <ClInclude Include="cpu.h" />
     <ClInclude Include="forbiddenActionException.h" />
+    <ClInclude Include="instructionRegister.h" />
+    <ClInclude Include="programCounter.h" />
+    <ClInclude Include="ram.h" />
     <ClInclude Include="register.h" />
     <ClInclude Include="shortRegister.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="alu.cpp" />
     <ClCompile Include="bus.cpp" />
-    <ClCompile Include="component.cpp" />
     <ClCompile Include="cpu.cpp" />
     <ClCompile Include="forbiddenActionException.cpp" />
+    <ClCompile Include="instructionRegister.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="programCounter.cpp" />
+    <ClCompile Include="ram.cpp" />
     <ClCompile Include="register.cpp" />
     <ClCompile Include="shortRegister.cpp" />
   </ItemGroup>

@@ -1,23 +1,23 @@
 #include "register.h"
 #include <iostream>
 
-std::uint8_t EmulatorLib::Register::value() const
+std::uint8_t EmulatorLib::Register::out() const
 {
 	return value_;
 }
 
-void EmulatorLib::Register::value(std::uint8_t value)
+void EmulatorLib::Register::load(std::uint8_t value)
 {
 	value_ = std::move(value);
 }
 
 void EmulatorLib::Register::clear()
 {
-	value(0);
+	load(0);
 }
 
 EmulatorLib::Register EmulatorLib::Register::operator=(std::uint8_t value)
 {
-	this->value(value);
+	this->load(value);
 	return *this;
 }

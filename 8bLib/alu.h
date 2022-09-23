@@ -11,7 +11,7 @@ namespace EmulatorLib {
 		 const EmulatorLib::Register &A_, &B_;
 	public:
 		ALU(const EmulatorLib::Register &A, const EmulatorLib::Register &B);
-		std::uint8_t value();
+		std::uint8_t out();
 		void substract();
 	};
 } // namespace EmulatorLib

@@ -5,15 +5,15 @@ EmulatorLib::ALU::ALU(const EmulatorLib::Register &A, const EmulatorLib::Registe
 {
 }
 
-std::uint8_t EmulatorLib::ALU::value()
+std::uint8_t EmulatorLib::ALU::out()
 {
 	if (isSubtracting_)
 	{
 		isSubtracting_ = false;
-		return A_.value() - B_.value();
+		return A_.out() - B_.out();
 	}
 
-	int value = A_.value() + B_.value();
+	int value = A_.out() + B_.out();
 
 	if (value > 255) { 
 		value -= 255; // overflow, reg. value shoud not be > 510

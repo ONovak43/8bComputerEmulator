@@ -30,13 +30,19 @@
     <ClCompile Include="shortRegister.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="component.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="forbiddenActionException.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="programCounter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="instructionRegister.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ram.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -56,10 +62,16 @@
     <ClInclude Include="shortRegister.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="component.h">
+    <ClInclude Include="forbiddenActionException.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="forbiddenActionException.h">
+    <ClInclude Include="programCounter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="instructionRegister.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ram.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

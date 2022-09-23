@@ -3,7 +3,7 @@
 
 #include <cstdint>
 #include <system_error>
-#include "register.h";
+#include "register.h"
 #include "forbiddenActionException.h"
 
 namespace EmulatorLib {

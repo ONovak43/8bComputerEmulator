@@ -10,8 +10,8 @@ namespace EmulatorLib {
 	protected:
 		std::uint8_t value_ = 0;
 	public:
-		virtual std::uint8_t value() const;
-		virtual void value(std::uint8_t value);
+		virtual std::uint8_t out() const;
+		virtual void load(std::uint8_t value);
 		virtual void clear();
 		EmulatorLib::Register operator=(std::uint8_t value);
 	};
