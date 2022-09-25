@@ -1,7 +1,7 @@
 #include "cpu.h"
 
 EmulatorLib::CPU::CPU()
-	: ALU_(A_, B_), CL_(A_, B_, IR_, MAR_, PC_, ALU_, RAM_, clk_)
+	: ALU_(A_, B_, clk_), CL_(A_, B_, IR_, MAR_, PC_, ALU_, RAM_, clk_)
 {
 }
 

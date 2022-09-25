@@ -16,7 +16,7 @@ namespace {
 	{
 	protected:
 		ControlLogicInstructionsTest()
-			: ALU(A, B) 
+			: ALU(A, B, clk) 
 		{
 		}
 
@@ -64,6 +64,12 @@ namespace {
 		TEST_NOT_AFFECTED();
 	}
 
+	TEST_F(ControlLogicInstructionsTest, ControlLogicShoudThrowAnExceptionWhenInstructionDoesNotExist)
+	{
+		EXPECT_THROW(cl->Execute(0xFF), EmulatorLib::ForbiddenActionException);
+		TEST_NOT_AFFECTED();
+	}
+
 	TEST_F(ControlLogicInstructionsTest, NOPShouldTakeOneCycleAndDoNothing)
 	{
 		clk.set(1);
@@ -71,7 +77,6 @@ namespace {
 		TEST_NOT_AFFECTED();
 	}
 
-	// TODO CARRY and ZERO FLAG in ALU TEST
 	TEST_F(ControlLogicInstructionsTest, LDAShouldLoadAValueToRegisterA)
 	{
 		clk.set(1);

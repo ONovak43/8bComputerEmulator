@@ -9,12 +9,13 @@ namespace {
 	protected:
 		void SetUp() override
 		{
-			alu = std::make_unique<EmulatorLib::ALU>(A, B);
+			alu = std::make_unique<EmulatorLib::ALU>(A, B, clk);
 		}
 
 		std::unique_ptr<EmulatorLib::ALU> alu;
 		EmulatorLib::Register A;
 		EmulatorLib::Register B;
+		EmulatorLib::Clock clk;
 	};
 
 	TEST_F(ALUTest, ALUShouldReturnZeroIfRegistersAreCleared) {
@@ -35,10 +36,14 @@ namespace {
 		EXPECT_EQ(alu->out(), 15);
 	}
 
-	TEST_F(ALUTest, ALUShouldStartFromZeroIfItOverflow) {
+	TEST_F(ALUTest, ALUShouldStartFromZeroIfItOverflowAndCarryFlagShouldBeSetToTrueForOneTickThenItShouldBeZero) {
+		clk.set(1);
 		A = UCHAR_MAX;
 		B = 30;
 		EXPECT_EQ(alu->out(), 30);
+		EXPECT_TRUE(alu->cf());
+		clk.tick();
+		EXPECT_FALSE(alu->cf());
 	}
 
 	TEST_F(ALUTest, ALUShouldReturnZeroIfItsSubtractingAndRegistersAreCleared) {

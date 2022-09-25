@@ -17,3 +17,20 @@ TEST(ClockTest, ClockShouldTickExactlyThatManyTimesItsSetToAndThenThrowAnExcepti
 
 	EXPECT_THROW(clk.tick(), EmulatorLib::ForbiddenActionException);
 }
+
+TEST(ClockTest, ClockShouldExecuteActionOnNextTickIfThatActionIsSet)
+{
+	EmulatorLib::Clock clk;
+	bool a = false;
+	clk.set(2);
+
+	clk.onNextTick([&a]() {
+		a = true;
+	});
+
+	EXPECT_FALSE(a);
+	clk.tick();
+	EXPECT_TRUE(a);
+	clk.tick();
+	EXPECT_TRUE(a);
+}

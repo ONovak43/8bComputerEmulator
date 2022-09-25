@@ -17,6 +17,16 @@ void EmulatorLib::Clock::tick(std::int32_t times)
 	}
 
 	cycles_ -= times;
+	
+	for (auto& callback : callbacks_)
+	{
+		callback();
+	}
+}
+
+void EmulatorLib::Clock::onNextTick(std::function<void()>&& callback)
+{
+	callbacks_.push_back(callback);
 }
 
 std::int32_t EmulatorLib::Clock::remaining()
