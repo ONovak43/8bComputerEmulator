@@ -7,6 +7,7 @@
 #include "alu.h"
 #include "instructionRegister.h"
 #include "ram.h"
+#include "controlLogic.h"
 
 namespace EmulatorLib {
 	class CPU
@@ -21,7 +22,9 @@ namespace EmulatorLib {
 		EmulatorLib::ShortRegister MAR_; // Memory Address Register
 		EmulatorLib::ProgramCounter PC_; // Program Counter
 		EmulatorLib::ALU ALU_; // ALU
-		EmulatorLib::RAM ram; // RAM
+		EmulatorLib::RAM RAM_; // RAM
+		EmulatorLib::ControlLogic CL_;
+		EmulatorLib::Clock clk_;
 	};
 } // namespace Emulator
 #endif

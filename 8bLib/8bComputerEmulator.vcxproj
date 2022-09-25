@@ -21,6 +21,8 @@
   <ItemGroup>
     <ClInclude Include="alu.h" />
     <ClInclude Include="bus.h" />
+    <ClInclude Include="clock.h" />
+    <ClInclude Include="controlLogic.h" />
     <ClInclude Include="cpu.h" />
     <ClInclude Include="forbiddenActionException.h" />
     <ClInclude Include="instructionRegister.h" />
@@ -32,6 +34,8 @@
   <ItemGroup>
     <ClCompile Include="alu.cpp" />
     <ClCompile Include="bus.cpp" />
+    <ClCompile Include="clock.cpp" />
+    <ClCompile Include="controlLogic.cpp" />
     <ClCompile Include="cpu.cpp" />
     <ClCompile Include="forbiddenActionException.cpp" />
     <ClCompile Include="instructionRegister.cpp" />

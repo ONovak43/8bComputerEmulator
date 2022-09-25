@@ -35,10 +35,10 @@ void EmulatorLib::RAM::checkAddress(std::uint8_t address)
 {
 	if (memory.max_size() <= address) {
 		std::stringstream ss;
-		ss << std::hex << address;
+		ss << std::hex << ((int)address);
 		std::string s;
 		ss >> s;
-		s = "Address" + s + "does not exist.";
+		s = "Address 0x" + s + " does not exist.";
 
 		const char* msg = s.c_str();
 

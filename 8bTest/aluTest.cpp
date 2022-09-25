@@ -9,7 +9,7 @@ namespace {
 	protected:
 		void SetUp() override
 		{
-			alu = std::make_unique<EmulatorLib::ALU>(EmulatorLib::ALU(A, B));
+			alu = std::make_unique<EmulatorLib::ALU>(A, B);
 		}
 
 		std::unique_ptr<EmulatorLib::ALU> alu;

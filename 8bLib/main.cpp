@@ -2,9 +2,17 @@
 #include "register.h"
 #include "alu.h"
 #include "ram.h"
+#include "clock.h"
+#include "cpu.h"
 
 int main()
 {
-	EmulatorLib::RAM ram;
-	ram.loadAt(0x0, 0x5);
+	EmulatorLib::CPU cpu;
+	try {
+		cpu.Execute();
+	}
+	catch (const std::exception& ex)
+	{
+		std::cerr << ex.what() << "\n";
+	}
 }
