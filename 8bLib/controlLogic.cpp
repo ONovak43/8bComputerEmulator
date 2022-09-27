@@ -9,16 +9,47 @@ EmulatorLib::ControlLogic::ControlLogic(EmulatorLib::Register& A, EmulatorLib::R
 {
 }
 
-void EmulatorLib::ControlLogic::Execute(std::uint8_t ins)
+void EmulatorLib::ControlLogic::execute(EmulatorLib::ControlLogic::Instruction instruction, std::uint8_t data)
 {
-	switch ((Instruction)ins)
+	switch (instruction)
 	{
 	case Instruction::NOP:
 		clk_.tick();
 		break;
+	case Instruction::LDA:
+		MAR_.load(data);
+		A_ = RAM_.dataAt(MAR_.out());
+		clk_.tick(3);
+		break;
+	case Instruction::ADD:
+		MAR_.load(data);
+		B_ = RAM_.dataAt(MAR_.out());
+		A_ = ALU_.out();
+		clk_.tick(4);
+		break;
+	case Instruction::SUB:
+		MAR_.load(data);
+		B_ = RAM_.dataAt(MAR_.out());
+		ALU_.substract();
+		A_ = ALU_.out();
+		clk_.tick(4);
+		break;
+	case Instruction::STA:
+		MAR_.load(data);
+		RAM_.loadAt(MAR_.out(), A_.out());
+		clk_.tick(3);
+		break;
+	case Instruction::LDI:
+		A_ = data;
+		clk_.tick(2);
+		break;
+	case Instruction::JMP:
+		PC_.load(data);
+		clk_.tick(2);
+		break;
 	default:
 		std::stringstream ss;
-		ss << std::hex << ((int)ins);
+		ss << std::hex << ((int)instruction);
 		std::string s;
 		ss >> s;
 		s = "Instruction 0x" + s + " does not exist.";

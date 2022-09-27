@@ -25,6 +25,8 @@ namespace EmulatorLib {
 		EmulatorLib::RAM RAM_; // RAM
 		EmulatorLib::ControlLogic CL_;
 		EmulatorLib::Clock clk_;
+		std::uint8_t fetchFromMemory();
+		std::pair<EmulatorLib::ControlLogic::Instruction, std::uint8_t> fetchInstruction(std::uint8_t instruction);
 	};
 } // namespace Emulator
 #endif

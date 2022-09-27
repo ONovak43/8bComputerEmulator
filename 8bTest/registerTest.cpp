@@ -5,7 +5,7 @@
 #include "../8bLib/bus.cpp"
 #include "../8bLib/forbiddenActionException.cpp"
 #include "../8bLib/programCounter.cpp"
-#include "../8bLib/programCounter.h"
+#include "../8bLib/instructionRegister.h"
 
 namespace {
 	TEST(RegisterTest, RegisterShouldBeZeroWhenItsCleared)
@@ -59,6 +59,17 @@ namespace {
 
 		A = 0b01011111;
 		EXPECT_EQ(A.out(), 0b1111);
+	}
+
+	TEST(InstructionRegister, InstructionRegisterShouldReturnOpcodeAndData)
+	{
+		EmulatorLib::InstructionRegister ins;
+
+		ins.load(0b01010001);
+
+		EXPECT_EQ(ins.address(), 0b0101);
+		EXPECT_EQ(ins.data(), 0b0001);
+		EXPECT_EQ(ins.out(), 0b0001);
 	}
 
 	TEST(BUSTest, BUSShouldThrowAnExceptionWhenItsCleared)

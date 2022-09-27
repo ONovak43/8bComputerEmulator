@@ -18,5 +18,24 @@ void EmulatorLib::CPU::Reset()
 void EmulatorLib::CPU::Execute()
 {
 	clk_.set(1);
-	CL_.Execute(0x0);
+	auto instruction = fetchInstruction(fetchFromMemory()); // fetch cycle
+	CL_.execute(instruction.first, instruction.second);
 }
+
+std::uint8_t EmulatorLib::CPU::fetchFromMemory()
+{
+	MAR_.load(PC_.out());
+	clk_.tick();
+	return MAR_.out();
+}
+
+std::pair<EmulatorLib::ControlLogic::Instruction, std::uint8_t> EmulatorLib::CPU::fetchInstruction(std::uint8_t instruction)
+{
+	using EmulatorLib::ControlLogic;
+	auto ramData = RAM_.dataAt(instruction);
+	IR_.load(ramData);
+	PC_.increase();
+	clk_.tick();
+	return std::make_pair(((ControlLogic::Instruction)(IR_.address())), IR_.data());
+}
+

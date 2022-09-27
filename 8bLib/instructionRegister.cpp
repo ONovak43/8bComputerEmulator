@@ -7,7 +7,7 @@ std::uint8_t EmulatorLib::InstructionRegister::out() const
 
 std::uint8_t EmulatorLib::InstructionRegister::address()
 {
-    return value_ & 0b11110000;
+    return (value_ & 0b11110000) >> 4;
 }
 
 std::uint8_t EmulatorLib::InstructionRegister::data()
