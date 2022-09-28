@@ -1,10 +1,10 @@
 #include "controlLogic.h"
 
-EmulatorLib::ControlLogic::ControlLogic(EmulatorLib::Register& A, EmulatorLib::Register& B,
+EmulatorLib::ControlLogic::ControlLogic(EmulatorLib::Register& A, EmulatorLib::Register& B, EmulatorLib::Register& OUT,
 	EmulatorLib::InstructionRegister& IR, EmulatorLib::ShortRegister& MAR, 
 	EmulatorLib::ProgramCounter& PC, EmulatorLib::ALU& ALU,
 	EmulatorLib::RAM& RAM, EmulatorLib::Clock& clock)
-	: A_{A}, B_{B}, IR_{IR}, MAR_{MAR},
+	: A_{A}, B_{B}, OUT_{OUT}, IR_{IR}, MAR_{MAR},
 	PC_{PC}, ALU_{ALU}, RAM_{RAM}, clk_{clock}
 {
 }
@@ -46,6 +46,27 @@ void EmulatorLib::ControlLogic::execute(EmulatorLib::ControlLogic::Instruction i
 	case Instruction::JMP:
 		PC_.load(data);
 		clk_.tick(2);
+		break;
+	case Instruction::JC:
+		if (ALU_.cf()) {
+			PC_.load(data);
+			clk_.tick();
+		}
+		clk_.tick();
+		break;
+	case Instruction::JZ:
+		if (ALU_.zf()) {
+			PC_.load(data);
+			clk_.tick();
+		}
+		clk_.tick();
+		break;
+	case Instruction::OUT:
+		OUT_ = A_.out();
+		clk_.tick(2);
+		break;
+	case Instruction::HLT:
+		HALT = true;
 		break;
 	default:
 		std::stringstream ss;

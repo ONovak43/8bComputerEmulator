@@ -16,7 +16,7 @@ namespace {
 	{
 	protected:
 		ControlLogicTest()
-			: ALU(A, B, clk) 
+			: ALU(A, B) 
 		{
 		}
 
@@ -29,11 +29,12 @@ namespace {
 			PC.clear();
 			RAM.clear();
 			clk.set(0);
-			cl = std::make_unique<EmulatorLib::ControlLogic>(A, B, IR, MAR, PC, ALU, RAM, clk);
+			cl = std::make_unique<EmulatorLib::ControlLogic>(A, B, OUT, IR, MAR, PC, ALU, RAM, clk);
 		}
 
 		std::unique_ptr<EmulatorLib::ControlLogic> cl;
 		EmulatorLib::Register A, B; // Registers A and B
+		EmulatorLib::Register OUT; // Output Register
 		EmulatorLib::InstructionRegister IR; // Instruction Register
 		EmulatorLib::ShortRegister MAR; // Memory Address Register
 		EmulatorLib::ProgramCounter PC; // Program Counter
@@ -56,6 +57,8 @@ namespace {
 			EXPECT_EQ(IR.address(), 0);
 			EXPECT_EQ(MAR.out(), 0);
 			EXPECT_EQ(PC.out(), 0);
+			EXPECT_EQ(ALU.cf(), false);
+			EXPECT_EQ(ALU.zf(), true);
 			EXPECT_EQ(clk.remaining(), 0);
 		}
 	};
@@ -92,6 +95,8 @@ namespace {
 		EXPECT_EQ(IR.address(), 0);
 		EXPECT_EQ(MAR.out(), 0xE);
 		EXPECT_EQ(PC.out(), 0);
+		EXPECT_EQ(ALU.cf(), false);
+		EXPECT_EQ(ALU.zf(), false);
 		EXPECT_EQ(clk.remaining(), 0);
 		for (int i = 0; i < 14; i++) {
 			EXPECT_EQ(RAM.dataAt(i), 0);
@@ -113,6 +118,8 @@ namespace {
 		EXPECT_EQ(IR.address(), 0);
 		EXPECT_EQ(MAR.out(), 0xE);
 		EXPECT_EQ(PC.out(), 0);
+		EXPECT_EQ(ALU.cf(), false);
+		EXPECT_EQ(ALU.zf(), false);
 		EXPECT_EQ(clk.remaining(), 0);
 		for (int i = 0; i < 14; i++) {
 			EXPECT_EQ(RAM.dataAt(i), 0);
@@ -134,6 +141,8 @@ namespace {
 		EXPECT_EQ(IR.address(), 0);
 		EXPECT_EQ(MAR.out(), 0xE);
 		EXPECT_EQ(PC.out(), 0);
+		EXPECT_EQ(ALU.cf(), false);
+		EXPECT_EQ(ALU.zf(), false);
 		EXPECT_EQ(clk.remaining(), 0);
 		for (int i = 0; i < 14; i++) {
 			EXPECT_EQ(RAM.dataAt(i), 0);
@@ -154,6 +163,8 @@ namespace {
 		EXPECT_EQ(IR.address(), 0);
 		EXPECT_EQ(MAR.out(), 0xE);
 		EXPECT_EQ(PC.out(), 0);
+		EXPECT_EQ(ALU.cf(), false);
+		EXPECT_EQ(ALU.zf(), false);
 		EXPECT_EQ(clk.remaining(), 0);
 		for (int i = 0; i < 14; i++) {
 			EXPECT_EQ(RAM.dataAt(i), 0);
@@ -173,6 +184,8 @@ namespace {
 		EXPECT_EQ(IR.address(), 0);
 		EXPECT_EQ(MAR.out(), 0);
 		EXPECT_EQ(PC.out(), 0);
+		EXPECT_EQ(ALU.cf(), false);
+		EXPECT_EQ(ALU.zf(), false);
 		EXPECT_EQ(clk.remaining(), 0);
 		TEST_RAM_NOT_AFFECTED();
 	}
@@ -189,6 +202,46 @@ namespace {
 		EXPECT_EQ(IR.address(), 0);
 		EXPECT_EQ(MAR.out(), 0);
 		EXPECT_EQ(PC.out(), 0x4);
+		EXPECT_EQ(ALU.cf(), false);
+		EXPECT_EQ(ALU.zf(), true);
+		EXPECT_EQ(clk.remaining(), 0);
+		TEST_RAM_NOT_AFFECTED();
+	}
+
+	TEST_F(ControlLogicTest, JCShouldSetProgramCounterToAnAddressToJumpWhenALUOverflows)
+	{
+		clk.set(2);
+		auto instruction = ((EmulatorLib::ControlLogic::Instruction)0b0111);
+		A = 0xFF;
+		B = 0x2;
+		cl->execute(instruction, 0x4);
+
+		EXPECT_EQ(A.out(), 0xFF);
+		EXPECT_EQ(B.out(), 0x2);
+		EXPECT_EQ(IR.out(), 0);
+		EXPECT_EQ(IR.address(), 0);
+		EXPECT_EQ(MAR.out(), 0);
+		EXPECT_EQ(PC.out(), 0x4);
+		EXPECT_EQ(ALU.cf(), true);
+		EXPECT_EQ(ALU.zf(), false);
+		EXPECT_EQ(clk.remaining(), 0);
+		TEST_RAM_NOT_AFFECTED();
+	}
+
+	TEST_F(ControlLogicTest, JZShouldSetProgramCounterToAnAddressToJumpWhenALUReturnsZero)
+	{
+		clk.set(2);
+		auto instruction = ((EmulatorLib::ControlLogic::Instruction)0b1000);
+		cl->execute(instruction, 0x4);
+
+		EXPECT_EQ(A.out(), 0x0);
+		EXPECT_EQ(B.out(), 0x0);
+		EXPECT_EQ(IR.out(), 0);
+		EXPECT_EQ(IR.address(), 0);
+		EXPECT_EQ(MAR.out(), 0);
+		EXPECT_EQ(PC.out(), 0x4);
+		EXPECT_EQ(ALU.cf(), false);
+		EXPECT_EQ(ALU.zf(), true);
 		EXPECT_EQ(clk.remaining(), 0);
 		TEST_RAM_NOT_AFFECTED();
 	}

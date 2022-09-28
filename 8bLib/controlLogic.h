@@ -16,6 +16,7 @@ namespace EmulatorLib {
 	class ControlLogic
 	{
 	public:
+		static bool HALT;
 		const enum class Instruction : std::uint8_t {
 			NOP = 0x0,
 			LDA = 0x1,
@@ -29,7 +30,7 @@ namespace EmulatorLib {
 			OUT = 0xE,
 			HLT = 0xF,
 		};
-		ControlLogic(EmulatorLib::Register& A, EmulatorLib::Register& B, 
+		ControlLogic(EmulatorLib::Register& A, EmulatorLib::Register& B, EmulatorLib::Register& OUT,
 			EmulatorLib::InstructionRegister& IR, EmulatorLib::ShortRegister& MAR,
 			EmulatorLib::ProgramCounter& PC, EmulatorLib::ALU& ALU,
 			EmulatorLib::RAM& RAM, EmulatorLib::Clock& clock);
@@ -38,12 +39,13 @@ namespace EmulatorLib {
 	private:
 		EmulatorLib::Register& A_;
 		EmulatorLib::Register& B_;
+		EmulatorLib::Register& OUT_;
 		EmulatorLib::InstructionRegister& IR_;
 		EmulatorLib::ShortRegister& MAR_;
 		EmulatorLib::ProgramCounter& PC_;
 		EmulatorLib::ALU& ALU_;
 		EmulatorLib::RAM& RAM_;
-		EmulatorLib::Clock& clk_;	
+		EmulatorLib::Clock& clk_;
 	};
 }
 

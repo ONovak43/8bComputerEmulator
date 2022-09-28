@@ -11,9 +11,9 @@ namespace EmulatorLib {
 		 bool isSubtracting_ = false;
 		 const EmulatorLib::Register &A_, &B_;
 		 bool CF_ = false;
-		 EmulatorLib::Clock& clk_;
+		 bool ZF_ = false;
 	public:
-		ALU(const EmulatorLib::Register &A, const EmulatorLib::Register &B, EmulatorLib::Clock& clk);
+		ALU(const EmulatorLib::Register &A, const EmulatorLib::Register &B);
 		std::uint8_t out();
 		bool cf();
 		bool zf();

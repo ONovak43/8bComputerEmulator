@@ -18,6 +18,7 @@ namespace EmulatorLib {
 		void Execute();
 	private:
 		EmulatorLib::Register A_, B_; // Registers A and B
+		EmulatorLib::Register OUT_; // Output Register
 		EmulatorLib::InstructionRegister IR_; // Instruction Register
 		EmulatorLib::ShortRegister MAR_; // Memory Address Register
 		EmulatorLib::ProgramCounter PC_; // Program Counter

@@ -24,7 +24,7 @@ void EmulatorLib::Clock::tick(std::int32_t times)
 	}
 }
 
-void EmulatorLib::Clock::onNextTick(std::function<void()>&& callback)
+void EmulatorLib::Clock::onNextTick(std::function<void()>&& callback) // not used
 {
 	callbacks_.push_back(callback);
 }

@@ -1,40 +1,44 @@
 #include "alu.h"
 
-EmulatorLib::ALU::ALU(const EmulatorLib::Register& A, const EmulatorLib::Register& B, EmulatorLib::Clock& clk)
-	: A_{ A }, B_{ B }, clk_{clk}
+EmulatorLib::ALU::ALU(const EmulatorLib::Register& A, const EmulatorLib::Register& B)
+	: A_{ A }, B_{ B }
 {
 }
 
 std::uint8_t EmulatorLib::ALU::out()
 {
+	int ret = A_.out() + B_.out();
+
 	if (isSubtracting_)
 	{
 		isSubtracting_ = false;
-		return A_.out() - B_.out();
+		ret = A_.out() - B_.out();
+	} 
+	
+	if (ret > 255) {
+		ret -= 255; // overflow, reg. value shoud not be > 510
 	}
 
-	int value = A_.out() + B_.out();
-
-	if (value > 255) { 
-		value -= 255; // overflow, reg. value shoud not be > 510
-		CF_ = true;
-	}
-
-	return value;
+	return ret;
 }
 
 bool EmulatorLib::ALU::cf()
 {
-	clk_.onNextTick([this]() {
-		this->CF_ = false;
-	});
-
-	return CF_;
+	return (A_.out() + B_.out()) > 255;
 }
 
 bool EmulatorLib::ALU::zf()
 {
-	return true;
+	int value = 0;
+
+	if (isSubtracting_) {
+		value = A_.out() - B_.out();
+	}
+	else {
+		value = A_.out() + B_.out();
+	}
+
+	return value == 0;
 }
 
 void EmulatorLib::ALU::substract()

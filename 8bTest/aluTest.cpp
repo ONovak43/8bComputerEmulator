@@ -9,7 +9,7 @@ namespace {
 	protected:
 		void SetUp() override
 		{
-			alu = std::make_unique<EmulatorLib::ALU>(A, B, clk);
+			alu = std::make_unique<EmulatorLib::ALU>(A, B);
 		}
 
 		std::unique_ptr<EmulatorLib::ALU> alu;
@@ -42,8 +42,6 @@ namespace {
 		B = 30;
 		EXPECT_EQ(alu->out(), 30);
 		EXPECT_TRUE(alu->cf());
-		clk.tick();
-		EXPECT_FALSE(alu->cf());
 	}
 
 	TEST_F(ALUTest, ALUShouldReturnZeroIfItsSubtractingAndRegistersAreCleared) {
