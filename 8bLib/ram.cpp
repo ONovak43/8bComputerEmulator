@@ -31,7 +31,7 @@ void EmulatorLib::RAM::loadAt(std::uint8_t address, std::uint8_t data)
 	memory_[address] = data;
 }
 
-void EmulatorLib::RAM::loadImage(std::array<std::uint8_t, 15> image)
+void EmulatorLib::RAM::loadImage(std::array<std::uint8_t, 16> image)
 {
 	memory_ = image;
 }

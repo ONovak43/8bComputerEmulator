@@ -19,54 +19,53 @@ void EmulatorLib::ControlLogic::execute(EmulatorLib::ControlLogic::Instruction i
 	case Instruction::LDA:
 		MAR_.load(data);
 		A_ = RAM_.dataAt(MAR_.out());
-		clk_.tick(3);
+		clk_.tick(2);
 		break;
 	case Instruction::ADD:
 		MAR_.load(data);
 		B_ = RAM_.dataAt(MAR_.out());
-		A_ = ALU_.out();
-		clk_.tick(4);
+		A_ = ALU_.out(true);
+		clk_.tick(3);
 		break;
 	case Instruction::SUB:
 		MAR_.load(data);
 		B_ = RAM_.dataAt(MAR_.out());
 		ALU_.substract();
-		A_ = ALU_.out();
-		clk_.tick(4);
+		A_ = ALU_.out(true);
+		clk_.tick(3);
 		break;
 	case Instruction::STA:
 		MAR_.load(data);
 		RAM_.loadAt(MAR_.out(), A_.out());
-		clk_.tick(3);
+		clk_.tick(2);
 		break;
 	case Instruction::LDI:
 		A_ = data;
-		clk_.tick(2);
+		clk_.tick();
 		break;
 	case Instruction::JMP:
 		PC_.load(data);
-		clk_.tick(2);
+		clk_.tick();
 		break;
 	case Instruction::JC:
 		if (ALU_.cf()) {
 			PC_.load(data);
 			clk_.tick();
 		}
-		clk_.tick();
 		break;
 	case Instruction::JZ:
-		if (ALU_.zf()) {
+		if (!ALU_.zf()) {
 			PC_.load(data);
 			clk_.tick();
 		}
-		clk_.tick();
 		break;
 	case Instruction::OUT:
 		OUT_ = A_.out();
-		clk_.tick(2);
+		clk_.tick();
 		break;
 	case Instruction::HLT:
 		HALT = true;
+		clk_.tick();
 		break;
 	default:
 		std::stringstream ss;

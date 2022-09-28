@@ -5,7 +5,7 @@ EmulatorLib::ALU::ALU(const EmulatorLib::Register& A, const EmulatorLib::Registe
 {
 }
 
-std::uint8_t EmulatorLib::ALU::out()
+std::uint8_t EmulatorLib::ALU::out(const bool FI)
 {
 	int ret = A_.out() + B_.out();
 
@@ -13,8 +13,13 @@ std::uint8_t EmulatorLib::ALU::out()
 	{
 		isSubtracting_ = false;
 		ret = A_.out() - B_.out();
-	} 
-	
+		CF_ = (FI && ret >= 0); // set carry flag if FI = true AND ret >= 0 (subtracting)
+	} else if (FI && ret > 255) { // set carry flag if FI = true AND ret > 255 (adding)
+		CF_ = true;
+	}
+
+	ZF_ = (FI && ret == 0);
+
 	if (ret > 255) {
 		ret -= 255; // overflow, reg. value shoud not be > 510
 	}
@@ -24,21 +29,12 @@ std::uint8_t EmulatorLib::ALU::out()
 
 bool EmulatorLib::ALU::cf()
 {
-	return (A_.out() + B_.out()) > 255;
+	return CF_;
 }
 
 bool EmulatorLib::ALU::zf()
 {
-	int value = 0;
-
-	if (isSubtracting_) {
-		value = A_.out() - B_.out();
-	}
-	else {
-		value = A_.out() + B_.out();
-	}
-
-	return value == 0;
+	return ZF_;
 }
 
 void EmulatorLib::ALU::substract()

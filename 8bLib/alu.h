@@ -14,7 +14,7 @@ namespace EmulatorLib {
 		 bool ZF_ = false;
 	public:
 		ALU(const EmulatorLib::Register &A, const EmulatorLib::Register &B);
-		std::uint8_t out();
+		std::uint8_t out(const bool FI = false);
 		bool cf();
 		bool zf();
 		void substract();

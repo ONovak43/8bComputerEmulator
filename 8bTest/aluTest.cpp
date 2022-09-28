@@ -36,12 +36,27 @@ namespace {
 		EXPECT_EQ(alu->out(), 15);
 	}
 
-	TEST_F(ALUTest, ALUShouldStartFromZeroIfItOverflowAndCarryFlagShouldBeSetToTrueForOneTickThenItShouldBeZero) {
-		clk.set(1);
+	TEST_F(ALUTest, ALUShouldStartFromZeroWhenItOverflowsAndCarryFlagShouldBeSetToTrue) {
 		A = UCHAR_MAX;
 		B = 30;
-		EXPECT_EQ(alu->out(), 30);
+		EXPECT_EQ(alu->out(true), 30);
 		EXPECT_TRUE(alu->cf());
+	}
+
+	TEST_F(ALUTest, ALUShouldSetCarryFlagToTrueWhenSubtractingRegistersAAndBAndResultIsPositive) {
+		A = 40;
+		B = 30;
+		alu->substract();
+		EXPECT_EQ(alu->out(true), 10);
+		EXPECT_TRUE(alu->cf());
+	}
+
+	TEST_F(ALUTest, ALUShouldSetCarryFlagToTrueWhenSubtractingRegistersAAndBAndResultIsNegative) {
+		A = 10;
+		B = 30;
+		alu->substract();
+		EXPECT_EQ(alu->out(true), 236);
+		EXPECT_FALSE(alu->cf());
 	}
 
 	TEST_F(ALUTest, ALUShouldReturnZeroIfItsSubtractingAndRegistersAreCleared) {

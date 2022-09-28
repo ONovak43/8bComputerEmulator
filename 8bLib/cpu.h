@@ -15,8 +15,9 @@ namespace EmulatorLib {
 	public:
 		CPU();
 		void reset();
-		void execute();
-		void loadToMemory(std::array<std::uint8_t, 15> image);
+		void execute(std::int32_t cycles);
+		void loadToMemory(std::array<std::uint8_t, 16> image);
+		std::uint8_t out();
 	private:
 		EmulatorLib::Register A_, B_; // Registers A and B
 		EmulatorLib::Register OUT_; // Output Register

@@ -1,4 +1,5 @@
 #include "cpu.h"
+#include <iostream>
 
 EmulatorLib::CPU::CPU()
 	: ALU_(A_, B_), CL_(A_, B_, OUT_, IR_, MAR_, PC_, ALU_, RAM_, clk_)
@@ -17,15 +18,23 @@ void EmulatorLib::CPU::reset()
 	RAM_.clear();
 }
 
-void EmulatorLib::CPU::execute()
+void EmulatorLib::CPU::execute(std::int32_t cycles)
 {
-	clk_.set(1);
-	auto instruction = fetchInstruction(fetchFromMemory()); // fetch cycle
-	CL_.execute(instruction.first, instruction.second);
+	clk_.set(cycles);
+	while (clk_.remaining() > 0 && CL_.HALT == false) {
+		auto instruction = fetchInstruction(fetchFromMemory()); // fetch cycle
+		CL_.execute(instruction.first, instruction.second);
+	}
 }
 
-void EmulatorLib::CPU::loadToMemory(std::array<std::uint8_t, 15> image)
+void EmulatorLib::CPU::loadToMemory(std::array<std::uint8_t, 16> image)
 {
+	RAM_.loadImage(image);
+}
+
+std::uint8_t EmulatorLib::CPU::out()
+{
+	return OUT_.out();
 }
 
 std::uint8_t EmulatorLib::CPU::fetchFromMemory()
