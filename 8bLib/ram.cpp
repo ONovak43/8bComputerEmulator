@@ -2,7 +2,7 @@
 #include "forbiddenActionException.h"
 
 EmulatorLib::RAM::RAM() :
-	memory{}
+	memory_{}
 {
 
 }
@@ -16,7 +16,7 @@ std::uint8_t EmulatorLib::RAM::dataAt(std::uint8_t address)
 		throw;
 	}
 
-	return memory[address];
+	return memory_[address];
 }
 
 void EmulatorLib::RAM::loadAt(std::uint8_t address, std::uint8_t data)
@@ -28,12 +28,17 @@ void EmulatorLib::RAM::loadAt(std::uint8_t address, std::uint8_t data)
 		throw;
 	}
 
-	memory[address] = data;
+	memory_[address] = data;
+}
+
+void EmulatorLib::RAM::loadImage(std::array<std::uint8_t, 15> image)
+{
+	memory_ = image;
 }
 
 void EmulatorLib::RAM::checkAddress(std::uint8_t address)
 {
-	if (memory.max_size() <= address) {
+	if (memory_.max_size() <= address) {
 		std::stringstream ss;
 		ss << std::hex << ((int)address);
 		std::string s;
@@ -48,5 +53,5 @@ void EmulatorLib::RAM::checkAddress(std::uint8_t address)
 
 void EmulatorLib::RAM::clear()
 {
-	memory.fill({});
+	memory_.fill({});
 }

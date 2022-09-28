@@ -245,4 +245,24 @@ namespace {
 		EXPECT_EQ(clk.remaining(), 0);
 		TEST_RAM_NOT_AFFECTED();
 	}
+
+	TEST_F(ControlLogicTest, OUTSouldCopyContentOfARegisterToOutRegister)
+	{
+		clk.set(2);
+		auto instruction = ((EmulatorLib::ControlLogic::Instruction)0b1110);
+		A = 0x4;
+		cl->execute(instruction);
+
+		EXPECT_EQ(A.out(), 0x4);
+		EXPECT_EQ(B.out(), 0x0);
+		EXPECT_EQ(OUT.out(), 0x4);
+		EXPECT_EQ(IR.out(), 0);
+		EXPECT_EQ(IR.address(), 0);
+		EXPECT_EQ(MAR.out(), 0);
+		EXPECT_EQ(PC.out(), 0x0);
+		EXPECT_EQ(ALU.cf(), false);
+		EXPECT_EQ(ALU.zf(), false);
+		EXPECT_EQ(clk.remaining(), 0);
+		TEST_RAM_NOT_AFFECTED();
+	}
 }

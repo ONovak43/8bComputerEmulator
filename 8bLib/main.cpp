@@ -9,7 +9,7 @@ int main()
 {
 	EmulatorLib::CPU cpu;
 	try {
-		cpu.Execute();
+		cpu.execute();
 	}
 	catch (const std::exception& ex)
 	{

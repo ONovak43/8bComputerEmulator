@@ -5,9 +5,9 @@ EmulatorLib::CPU::CPU()
 {
 }
 
-void EmulatorLib::CPU::Reset()
+void EmulatorLib::CPU::reset()
 {
-	EmulatorLib::ControlLogic::HALT = false;
+	CL_.HALT = false;
 	A_.clear();
 	B_.clear();
 	OUT_.clear();
@@ -17,11 +17,15 @@ void EmulatorLib::CPU::Reset()
 	RAM_.clear();
 }
 
-void EmulatorLib::CPU::Execute()
+void EmulatorLib::CPU::execute()
 {
 	clk_.set(1);
 	auto instruction = fetchInstruction(fetchFromMemory()); // fetch cycle
 	CL_.execute(instruction.first, instruction.second);
+}
+
+void EmulatorLib::CPU::loadToMemory(std::array<std::uint8_t, 15> image)
+{
 }
 
 std::uint8_t EmulatorLib::CPU::fetchFromMemory()

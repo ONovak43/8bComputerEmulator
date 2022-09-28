@@ -16,7 +16,7 @@ namespace EmulatorLib {
 	class ControlLogic
 	{
 	public:
-		static bool HALT;
+		bool HALT;
 		const enum class Instruction : std::uint8_t {
 			NOP = 0x0,
 			LDA = 0x1,
